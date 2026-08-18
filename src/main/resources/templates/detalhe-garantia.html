@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprovante de Garantia | Garantia Fácil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen flex flex-col items-center justify-center p-4">
+
+<div class="w-full max-w-md mb-4 flex justify-between items-center text-xs">
+    <a href="/garantias" class="text-slate-500 hover:text-slate-800 font-semibold transition">&larr; Voltar ao Painel</a>
+    <a href="/nova-garantia" class="text-slate-500 hover:text-slate-800 font-semibold transition">+ Nova Garantia</a>
+</div>
+
+<div class="bg-white w-full max-w-md rounded-2xl shadow-xl overflow-hidden border border-slate-200">
+
+    <div class="p-6 text-center text-white"
+         th:classappend="${garantia.malUso} ? 'bg-red-700' : (${valida} ? 'bg-emerald-600' : 'bg-rose-600')">
+        <span class="text-xs uppercase tracking-widest font-semibold opacity-90">Status da Garantia</span>
+        <h1 class="text-2xl font-bold mt-1"
+            th:text="${garantia.malUso} ? 'Anulada por Mal Uso' : (${valida} ? 'Garantia Ativa' : 'Garantia Expirada')">Status</h1>
+        <p class="text-xs opacity-90 mt-1 font-mono" th:text="${garantia.codigoGarantia}">GAR-00000</p>
+    </div>
+
+    <div class="p-6 space-y-4 text-sm text-slate-700">
+        <div class="border-b border-slate-100 pb-3">
+            <span class="block text-xs uppercase font-semibold text-slate-400">Cliente</span>
+            <span class="text-base font-bold text-slate-900" th:text="${garantia.clienteNome}">Nome</span>
+        </div>
+
+        <div class="border-b border-slate-100 pb-3">
+            <span class="block text-xs uppercase font-semibold text-slate-400">CPF do Cliente</span>
+            <span class="font-medium text-slate-800" th:text="${garantia.cpf}">000.000.000-00</span>
+        </div>
+
+        <div class="border-b border-slate-100 pb-3">
+            <span class="block text-xs uppercase font-semibold text-slate-400">Aparelho / Modelo</span>
+            <span class="font-medium text-slate-800" th:text="${garantia.aparelho}">Aparelho</span>
+        </div>
+
+        <div class="border-b border-slate-100 pb-3">
+            <span class="block text-xs uppercase font-semibold text-slate-400">Serviço Realizado</span>
+            <span class="font-medium text-slate-800" th:text="${garantia.servico}">Serviço</span>
+        </div>
+
+        <div class="bg-red-50 border border-red-200 p-3.5 rounded-xl space-y-1" th:if="${garantia.malUso}">
+            <span class="block text-xs uppercase font-semibold text-red-600 tracking-wider">Laudo Técnico de Mal Uso</span>
+            <p class="text-xs text-red-800 font-medium leading-relaxed" th:text="${garantia.observacaoTecnica}">
+                Descrição do motivo técnico...
+            </p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 pt-1">
+            <div>
+                <span class="block text-xs uppercase font-semibold text-slate-400">Data do Serviço</span>
+                <span class="font-medium text-slate-800" th:text="${garantia.dataRealizacao}">00/00/0000</span>
+            </div>
+            <div>
+                <span class="block text-xs uppercase font-semibold text-slate-400">Válido Até</span>
+                <span class="font-medium text-slate-800" th:text="${garantia.dataValidade}">00/00/0000</span>
+            </div>
+        </div>
+
+        <div class="pt-4 border-t border-slate-100" th:if="${!garantia.malUso}">
+            <a th:href="@{/g/{codigo}/mal-uso(codigo=${garantia.codigoGarantia})}"
+               class="block text-center bg-red-50 hover:bg-red-100 text-red-600 font-semibold py-2 px-4 rounded-xl transition text-xs border border-red-200">
+                ⚠️ Registrar Mal Uso / Anular Garantia
+            </a>
+        </div>
+    </div>
+
+    <div class="bg-slate-50 px-6 py-4 border-t border-slate-100 text-center">
+        <p class="text-xs text-slate-400">Garantia Fácil &bull; Comprovante Digital</p>
+    </div>
+
+</div>
+
+</body>
+</html>

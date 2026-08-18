@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aviso | Garantia Fácil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen flex items-center justify-center p-4">
+
+<div class="bg-white w-full max-w-md rounded-2xl shadow-xl overflow-hidden border border-slate-200 text-center p-8">
+    <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+        !
+    </div>
+
+    <h1 class="text-xl font-bold text-slate-800" th:text="${titulo}">Aviso do Sistema</h1>
+
+    <p class="text-slate-500 text-sm mt-2" th:text="${mensagemErro}">Não foi possível processar a sua solicitação.</p>
+
+    <div class="mt-6">
+        <a href="/nova-garantia" class="inline-block bg-slate-900 text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition hover:bg-slate-800">
+            Voltar ao Início
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

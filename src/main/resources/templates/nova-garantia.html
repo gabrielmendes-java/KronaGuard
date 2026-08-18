@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Garantia | Garantia Fácil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen flex items-center justify-center p-4">
+
+<div class="bg-white w-full max-w-lg rounded-2xl shadow-xl overflow-hidden border border-slate-200">
+
+    <div class="px-6 pt-6 flex justify-between items-center">
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Garantia Fácil</span>
+        <a href="/garantias" class="text-xs font-semibold text-slate-600 hover:text-slate-900 transition flex items-center gap-1">
+            &larr; Ver Histórico
+        </a>
+    </div>
+
+    <div class="bg-slate-900 text-white p-6 mt-4">
+        <span class="text-xs uppercase tracking-wider font-semibold text-slate-400">Painel do Técnico</span>
+        <h1 class="text-2xl font-bold mt-1">Nova Garantia</h1>
+        <p class="text-slate-400 text-sm mt-1">Preencha os dados do atendimento para gerar o comprovante.</p>
+    </div>
+
+    <form th:action="@{/garantias}" th:object="${garantia}" method="post" class="p-6 space-y-4">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Nome do Cliente</label>
+                <input type="text" th:field="*{clienteNome}" required
+                       placeholder="Ex: João da Silva"
+                       class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-slate-900 focus:outline-none text-slate-800 text-sm">
+            </div>
+
+            <div>
+                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">CPF do Cliente</label>
+                <input id="cpf" type="text" th:field="*{cpf}"
+                       placeholder="Ex: 000.000.000-00"
+                       class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-slate-900 focus:outline-none text-slate-800 text-sm">
+                <!-- Exibição da mensagem de erro do Bean Validation -->
+                <p th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}" class="text-red-500 text-xs mt-1 font-medium"></p>
+            </div>
+        </div>
+
+        <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Aparelho / Modelo</label>
+            <input type="text" th:field="*{aparelho}"
+                   placeholder="Ex: iPhone 17"
+                   class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-slate-900 focus:outline-none text-slate-800 text-sm">
+        </div>
+
+        <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Serviço Realizado</label>
+            <input type="text" th:field="*{servico}"
+                   placeholder="Ex: Troca de Tela / Substituição de Bateria"
+                   class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-slate-900 focus:outline-none text-slate-800 text-sm">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Data do Serviço</label>
+                <input type="date" th:field="*{dataRealizacao}" required
+                       class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-slate-900 focus:outline-none text-slate-800 text-sm">
+            </div>
+
+            <div>
+                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Dias de Garantia</label>
+                <input type="number" th:field="*{diasGarantia}" required value="90"
+                       class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-slate-900 focus:outline-none text-slate-800 text-sm">
+            </div>
+        </div>
+
+        <div class="pt-4">
+            <button type="submit"
+                    class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 rounded-xl transition duration-200 shadow-lg shadow-slate-900/10 text-center">
+                Gerar e Salvar Garantia
+            </button>
+        </div>
+
+    </form>
+
+    <div class="bg-slate-50 px-6 py-4 border-t border-slate-100 text-center">
+        <p class="text-xs text-slate-400">Garantia Fácil</p>
+    </div>
+
+</div>
+
+<script>
+    document.getElementById("cpf").addEventListener("input", function (e) {
+        let value = e.target.value.replace(/\D/g, "");
+        if (value.length > 11) value = value.substring(0, 11);
+
+        value = value.replace(/(\d{3})(\d)/, "$1.$2");
+        value = value.replace(/(\d{3})(\d)/, "$1.$2");
+        value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
+        e.target.value = value;
+    });
+</script>
+
+</body>
+</html>
