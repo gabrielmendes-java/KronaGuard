@@ -25,4 +25,4 @@
 ## 🛠️ Como Executar o Projeto Localmente
 1. Clone o repositório:
    ```bash
-   git clone [https://github.com/SEU-USUARIO/KronaGuard.git](https://github.com/SEU-USUARIO/KronaGuard.git)
+   git clone [https://github.com/gabrielmendes-java/KronaGuard.git](https://github.com/gabrielmendes-java/KronaGuard.git)
