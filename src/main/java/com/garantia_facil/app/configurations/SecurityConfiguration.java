@@ -17,9 +17,10 @@ public class SecurityConfiguration{
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/login", "/cadastro","/g/**", "/css/**", "/js/**")
-                .permitAll()
-                .anyRequest().authenticated()
+                .authorizeHttpRequests(auth ->
+                                auth
+                                .requestMatchers("/g/*/mal-uso/**").hasRole("TECNICO")
+                                .requestMatchers("/login", "/cadastro","/g/**", "/css/**", "/js/**").permitAll().anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
@@ -27,6 +28,7 @@ public class SecurityConfiguration{
                         .permitAll()
                 )
                 .logout(logout -> logout.logoutSuccessUrl("/login?logout"));
+
         return http.build();
     }
 }

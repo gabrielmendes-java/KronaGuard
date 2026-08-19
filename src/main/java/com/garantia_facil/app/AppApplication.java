@@ -1,5 +1,6 @@
 package com.garantia_facil.app;
 
+import com.garantia_facil.app.configurations.SecurityConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

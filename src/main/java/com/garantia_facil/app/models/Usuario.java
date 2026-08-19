@@ -29,4 +29,8 @@ public class Usuario {
     @Size(min = 8, max = 100, message = "Sua senha deve conter entre 8 e 100 caracteres")
     @Column(nullable = false, length = 255)
     private String senha;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 }

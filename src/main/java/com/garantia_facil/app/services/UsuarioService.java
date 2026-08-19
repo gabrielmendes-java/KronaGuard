@@ -1,6 +1,7 @@
 package com.garantia_facil.app.services;
 
 import com.garantia_facil.app.configurations.SecurityConfiguration;
+import com.garantia_facil.app.models.Role;
 import com.garantia_facil.app.models.Usuario;
 import com.garantia_facil.app.repositories.UsuarioRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +22,7 @@ public class UsuarioService {
             throw new IllegalArgumentException("Este email já está cadastrado.");
         }
 
+        usuario.setRole(Role.TECNICO);
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         usuarioRepository.save(usuario);
     }
