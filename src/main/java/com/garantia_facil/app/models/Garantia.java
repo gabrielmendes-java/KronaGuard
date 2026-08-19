@@ -19,21 +19,27 @@ public class Garantia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     @NotBlank(message = "O nome do cliente é obrigatório.")
     private String clienteNome;
 
+    @Column(nullable = false)
     @CPF(message = "CPF inválido")
     private String cpf;
 
+    @Column(nullable = false)
     @NotBlank(message = "O modelo do aparelho é obrigatório")
     private String aparelho;
 
+    @Column(nullable = false)
     @NotBlank(message = "O serviço realizado é obrigatório")
     private String servico;
 
+    @Column(nullable = false)
     @NotNull(message = "A data de realização é obrigatória")
     private LocalDate dataRealizacao;
 
+    @Column(nullable = false)
     @NotNull(message = "Os dias de garantia são obrigatórios")
     @Min(value = 1, message = "A garantia deve ser de pelo menos 1 dia")
     private Integer diasGarantia;
