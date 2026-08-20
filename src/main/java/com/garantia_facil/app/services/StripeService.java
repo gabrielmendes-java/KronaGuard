@@ -68,6 +68,7 @@ public class StripeService {
             usuario.setRole(Role.TECNICO);
 
             assinaturaRepository.save(assinatura);
+            usuarioRepository.save(usuario);
         }
     }
 }
