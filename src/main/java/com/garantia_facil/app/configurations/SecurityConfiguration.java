@@ -17,10 +17,11 @@ public class SecurityConfiguration{
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/webhook/stripe"))
                 .authorizeHttpRequests(auth ->
                                 auth
                                 .requestMatchers("/g/*/mal-uso/**", "/garantias", "/nova-garantia").hasRole("TECNICO")
-                                .requestMatchers("/login", "/cadastro","/g/**", "/css/**", "/js/**").permitAll().anyRequest().authenticated()
+                                .requestMatchers("/login", "/cadastro","/g/**", "/css/**", "/js/**", "/webhook/stripe").permitAll().anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
