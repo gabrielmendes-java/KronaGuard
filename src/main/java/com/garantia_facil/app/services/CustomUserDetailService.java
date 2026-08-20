@@ -3,6 +3,8 @@ package com.garantia_facil.app.services;
 import com.garantia_facil.app.models.Usuario;
 import com.garantia_facil.app.repositories.AssinaturaRepository;
 import com.garantia_facil.app.repositories.UsuarioRepository;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,6 +21,7 @@ public class CustomUserDetailService implements UserDetailsService {
         this.assinaturaRepository = assinaturaRepository;
     }
 
+    @NullMarked
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepository.findByEmail(email)
@@ -28,12 +31,6 @@ public class CustomUserDetailService implements UserDetailsService {
                 .username(usuario.getEmail())
                 .password(usuario.getSenha())
                 .roles(usuario.getRole().name());
-
-        boolean assinaturaAtiva = assinaturaRepository.existsByUsuarioIdAndStatus(usuario.getId(), usuario.getAssinatura().getStatus());
-
-        if (assinaturaAtiva){
-            builder.authorities("ASSINATURA_ATIVA");
-        }
 
         return builder.build();
     }

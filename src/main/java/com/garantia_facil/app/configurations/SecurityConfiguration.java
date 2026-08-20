@@ -23,7 +23,6 @@ public class SecurityConfiguration{
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/webhook/stripe"))
                 .authorizeHttpRequests(auth ->
                                 auth
-                                .requestMatchers("/g/*/mal-uso/**", "/garantias", "/nova-garantia").authenticated()
                                 .requestMatchers("/login", "/cadastro","/g/**", "/css/**", "/js/**", "/webhook/stripe").permitAll().anyRequest().authenticated()
                 )
                 .formLogin(form -> form

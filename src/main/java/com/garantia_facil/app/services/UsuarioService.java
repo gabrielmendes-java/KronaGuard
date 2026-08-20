@@ -2,6 +2,7 @@ package com.garantia_facil.app.services;
 
 import com.garantia_facil.app.configurations.SecurityConfiguration;
 import com.garantia_facil.app.models.Role;
+import com.garantia_facil.app.models.StatusAssinatura;
 import com.garantia_facil.app.models.Usuario;
 import com.garantia_facil.app.repositories.AssinaturaRepository;
 import com.garantia_facil.app.repositories.UsuarioRepository;
@@ -47,6 +48,6 @@ public class UsuarioService {
         Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
 
-        return assinaturaRepository.existsByUsuarioIdAndStatus(usuario.getId(), usuario.getAssinatura().getStatus());
+        return assinaturaRepository.existsByUsuarioIdAndStatus(usuario.getId(), StatusAssinatura.ATIVA);
     }
 }
