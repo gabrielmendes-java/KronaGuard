@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planos | Krona Guard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-100 min-h-screen flex flex-col">
+
+<header class="bg-white border-b border-slate-200">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+
+        <a href="/home"
+           class="text-sm font-semibold text-slate-500 hover:text-slate-800 transition">
+            Krona Guard | Home
+        </a>
+
+
+
+        <form th:action="@{/logout}" method="post">
+            <button type="submit"
+                    class="text-sm font-semibold text-slate-500 hover:text-slate-800 transition">
+                Sair
+            </button>
+        </form>
+
+    </div>
+</header>
+
+
+<main class="flex-1 flex items-center justify-center px-4 py-12">
+
+    <div class="w-full max-w-5xl">
+
+        <div class="text-center mb-10">
+
+            <span class="text-xs uppercase tracking-widest font-semibold text-emerald-600">
+                Assinatura
+            </span>
+
+            <h1 class="text-3xl font-bold text-slate-900 mt-2">
+                Escolha seu plano
+            </h1>
+
+            <p class="text-slate-500 mt-2">
+                Tenha acesso completo ao Krona Guard.
+            </p>
+
+        </div>
+
+
+        <div class="max-w-md mx-auto">
+
+            <!-- PLANO -->
+            <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+
+                <div class="p-6">
+
+                    <h2 class="text-xl font-bold text-slate-900">
+                        Plano Profissional
+                    </h2>
+
+                    <p class="text-sm text-slate-500 mt-1">
+                        Tudo que você precisa para gerenciar suas garantias.
+                    </p>
+
+
+                    <div class="mt-6">
+
+                        <span class="text-4xl font-bold text-slate-900">
+                            R$ 9,90
+                        </span>
+
+                        <span class="text-slate-500 text-sm">
+                            / mês
+                        </span>
+
+                    </div>
+
+
+                    <div class="border-t border-slate-100 my-6"></div>
+
+
+                    <ul class="space-y-3 text-sm text-slate-700">
+
+                        <li class="flex items-center gap-2">
+                            <span class="text-emerald-600">✓</span>
+                            Gerenciamento de garantias
+                        </li>
+
+                        <li class="flex items-center gap-2">
+                            <span class="text-emerald-600">✓</span>
+                            Comprovantes digitais
+                        </li>
+
+                        <li class="flex items-center gap-2">
+                            <span class="text-emerald-600">✓</span>
+                            Controle de clientes
+                        </li>
+
+                        <li class="flex items-center gap-2">
+                            <span class="text-emerald-600">✓</span>
+                            Registro de mal uso
+                        </li>
+
+                        <li class="flex items-center gap-2">
+                            <span class="text-emerald-600">✓</span>
+                            Sistema online
+                        </li>
+
+                    </ul>
+
+
+                    <!-- BOTÃO -->
+                    <form th:action="@{/assinatura/checkout}" method="post">
+
+                        <button type="submit"
+                                class="w-full mt-8 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-xl transition shadow-sm">
+
+                            Assinar agora
+
+                        </button>
+
+                    </form>
+
+                    <p class="text-xs text-slate-400 text-center mt-4">
+                        Pagamento seguro processado pelo Stripe.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer class="text-center py-6 text-xs text-slate-400">
+    Krona Guard &bull; Sistema de gerenciamento de garantias
+</footer>
+
+</body>
+</html>

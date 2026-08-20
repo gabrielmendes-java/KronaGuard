@@ -33,4 +33,7 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    @OneToOne(mappedBy = "usuario")
+    private Assinatura assinatura;
 }

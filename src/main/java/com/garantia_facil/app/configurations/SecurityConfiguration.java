@@ -19,12 +19,12 @@ public class SecurityConfiguration{
         http
                 .authorizeHttpRequests(auth ->
                                 auth
-                                .requestMatchers("/g/*/mal-uso/**").hasRole("TECNICO")
+                                .requestMatchers("/g/*/mal-uso/**", "/garantias", "/nova-garantia").hasRole("TECNICO")
                                 .requestMatchers("/login", "/cadastro","/g/**", "/css/**", "/js/**").permitAll().anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/garantias", true)
+                        .defaultSuccessUrl("/planos", true)
                         .permitAll()
                 )
                 .logout(logout -> logout.logoutSuccessUrl("/login?logout"));

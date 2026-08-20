@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Início | Krona Guard</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-100 min-h-screen">
+
+<!-- Header -->
+<header class="bg-white border-b border-slate-200">
+
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+
+        <div>
+            <h1 class="text-xl font-bold text-slate-900">
+                Krona Guard
+            </h1>
+
+            <p class="text-xs text-slate-500">
+                Sistema de gerenciamento de garantias
+            </p>
+        </div>
+
+        <form th:action="@{/logout}" method="post">
+
+            <button type="submit"
+                    class="text-sm font-medium text-slate-500 hover:text-slate-900 transition">
+
+                Sair
+
+            </button>
+
+        </form>
+
+    </div>
+
+</header>
+
+
+<!-- Conteúdo -->
+<main class="max-w-6xl mx-auto px-6 py-10">
+
+    <!-- Saudação -->
+    <section class="mb-8">
+
+        <h2 class="text-3xl font-bold text-slate-900">
+            Olá, <span th:text="${usuario.nome}">Usuário</span>!
+        </h2>
+
+        <p class="text-slate-500 mt-2">
+            O que você deseja fazer hoje?
+        </p>
+
+    </section>
+
+
+    <!-- Cards -->
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+
+        <!-- Nova garantia -->
+        <a th:if="${usuario.role.name() == 'TECNICO'}"
+           href="/nova-garantia"
+           class="bg-white rounded-2xl border border-slate-200 shadow-sm
+                  p-6 hover:shadow-md hover:border-emerald-300 transition">
+
+            <div class="w-12 h-12 rounded-xl bg-emerald-100
+                        flex items-center justify-center mb-5">
+
+                <span class="text-2xl text-emerald-600">
+                    +
+                </span>
+
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-900">
+                Nova garantia
+            </h3>
+
+            <p class="text-sm text-slate-500 mt-2 leading-relaxed">
+                Cadastre uma nova garantia para um cliente.
+            </p>
+
+        </a>
+
+
+        <!-- Minhas garantias -->
+        <a th:if="${usuario.role.name() == 'TECNICO'}"
+           href="/garantias"
+           class="bg-white rounded-2xl border border-slate-200 shadow-sm
+                  p-6 hover:shadow-md hover:border-blue-300 transition">
+
+            <div class="w-12 h-12 rounded-xl bg-blue-100
+                        flex items-center justify-center mb-5">
+
+                <span class="text-2xl text-blue-600">
+                    ✓
+                </span>
+
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-900">
+                Minhas garantias
+            </h3>
+
+            <p class="text-sm text-slate-500 mt-2 leading-relaxed">
+                Consulte e gerencie as garantias cadastradas.
+            </p>
+
+        </a>
+
+
+        <!-- Clientes -->
+        <a th:if="${usuario.role.name() == 'TECNICO'}"
+           href="/clientes"
+           class="bg-white rounded-2xl border border-slate-200 shadow-sm
+                  p-6 hover:shadow-md hover:border-purple-300 transition">
+
+            <div class="w-12 h-12 rounded-xl bg-purple-100
+                        flex items-center justify-center mb-5">
+
+                <span class="text-2xl text-purple-600">
+                    👤
+                </span>
+
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-900">
+                Clientes
+            </h3>
+
+            <p class="text-sm text-slate-500 mt-2 leading-relaxed">
+                Consulte os clientes cadastrados no sistema.
+            </p>
+
+        </a>
+
+
+        <!-- Assinatura -->
+        <a href="/planos"
+           class="bg-white rounded-2xl border border-slate-200 shadow-sm
+                  p-6 hover:shadow-md hover:border-amber-300 transition">
+
+            <div class="w-12 h-12 rounded-xl bg-amber-100
+                        flex items-center justify-center mb-5">
+
+                <span class="text-2xl text-amber-600">
+                    $
+                </span>
+
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-900">
+                Minha assinatura
+            </h3>
+
+            <p class="text-sm text-slate-500 mt-2 leading-relaxed">
+                Consulte seu plano e gerencie sua assinatura.
+            </p>
+
+        </a>
+
+
+    </section>
+
+
+    <!-- Rodapé informativo -->
+    <section class="mt-10 bg-white border border-slate-200 rounded-2xl p-6">
+
+        <p class="text-sm text-slate-500 text-center">
+            Krona Guard &bull; Gerenciamento de garantias
+        </p>
+
+    </section>
+
+</main>
+
+</body>
+</html>

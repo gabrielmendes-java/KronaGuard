@@ -31,9 +31,6 @@ public class UsuarioController {
 
     @PostMapping("/cadastro")
     public String cadastrar(@Valid Usuario usuario, BindingResult result, Model model){
-        System.out.println("Chegou no Post");
-        System.out.println("Erro: " + result.hasErrors());
-
         if(result.hasErrors()){
             return "cadastro";
         }

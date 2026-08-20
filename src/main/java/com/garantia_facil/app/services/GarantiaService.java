@@ -16,7 +16,7 @@ public class GarantiaService {
         this.garantiaRepository = garantiaRepository;
     }
     public Garantia criarGarantia(Garantia garantia){
-        String codigoUnico = "GAR-" + UUID.randomUUID().toString().substring(0, 5).toUpperCase();
+        String codigoUnico = "GAR-" + UUID.randomUUID().toString().substring(0, 12).toUpperCase();
         garantia.setCodigoGarantia(codigoUnico);
 
         LocalDate validade = garantia.getDataRealizacao().plusDays(garantia.getDiasGarantia());

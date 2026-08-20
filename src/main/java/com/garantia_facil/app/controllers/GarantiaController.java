@@ -1,8 +1,11 @@
 package com.garantia_facil.app.controllers;
 
 import com.garantia_facil.app.models.Garantia;
+import com.garantia_facil.app.models.Usuario;
 import com.garantia_facil.app.services.GarantiaService;
+import com.garantia_facil.app.services.UsuarioService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,18 +13,29 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class GarantiaController {
     private final GarantiaService garantiaService;
+    private final UsuarioService usuarioService;
 
-    public GarantiaController(GarantiaService garantiaService){
+    public GarantiaController(GarantiaService garantiaService, UsuarioService usuarioService){
         this.garantiaService = garantiaService;
+        this.usuarioService = usuarioService;
     }
 
     @GetMapping("/")
     public String inicio(){
-        return "redirect:/nova-garantia";
+        return "redirect:/home";
+    }
+
+    @GetMapping("/home")
+    public String inicioPag(Model model, Authentication authentication){
+        Usuario usuario = usuarioService.buscarPorEmail(authentication.getName());
+
+        model.addAttribute("usuario", usuario);
+        return "home";
     }
 
     @GetMapping("/nova-garantia")
