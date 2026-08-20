@@ -31,7 +31,7 @@ public class StripeService {
 
         SessionCreateParams params = SessionCreateParams.builder()
                 .setMode(SessionCreateParams.Mode.SUBSCRIPTION)
-                .setSuccessUrl("https://kronaguard-production.up.railway.app/assinatura/sucesso")
+                .setSuccessUrl("https://kronaguard-production.up.railway.app/assinatura/sucesso?session_id={CHECKOUT_SESSION_ID}")
                 .setCancelUrl("https://kronaguard-production.up.railway.app/assinatura/cancelada")
                 .putMetadata("usuarioId", usuario.getId().toString())
                 .putMetadata("plano", plano.name())
@@ -57,7 +57,8 @@ public class StripeService {
             Usuario usuario = usuarioRepository.findById(usuarioId)
                     .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
 
-            Assinatura assinatura = new Assinatura();
+            Assinatura assinatura = assinaturaRepository.findByUsuarioId(usuarioId)
+                    .orElseGet(Assinatura::new);
 
             assinatura.setPlano(Plano.valueOf(plano));
             assinatura.setUsuario(usuario);

@@ -5,6 +5,7 @@ import com.garantia_facil.app.models.Usuario;
 import com.garantia_facil.app.services.GarantiaService;
 import com.garantia_facil.app.services.UsuarioService;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,11 +39,14 @@ public class GarantiaController {
         return "home";
     }
 
+    @PreAuthorize("@usuarioService.possuiAssinatura(authentication.name)")
     @GetMapping("/nova-garantia")
     public String form(Model model){
         model.addAttribute("garantia", new Garantia());
+
         return "nova-garantia";
     }
+
 
     @GetMapping("/g/{codigo}")
     public String exibirDetalhes(@PathVariable String codigo, Model model){
@@ -55,18 +59,21 @@ public class GarantiaController {
         return "detalhe-garantia";
     }
 
+    @PreAuthorize("@usuarioService.possuiAssinatura(authentication.name)")
     @GetMapping("/g/{codigo}/mal-uso")
     public String formMalUso(@PathVariable String codigo, Model model){
         model.addAttribute("codigo", codigo);
         return "form-mal-uso";
     }
 
+    @PreAuthorize("@usuarioService.possuiAssinatura(authentication.name)")
     @PostMapping("/g/{codigo}/mal-uso")
     public String processarMalUso(@PathVariable String codigo, @RequestParam String observacao){
         garantiaService.registrarMalUso(codigo, observacao);
         return "redirect:/g/" + codigo;
     }
 
+    @PreAuthorize("@usuarioService.possuiAssinatura(authentication.name)")
     @GetMapping("/garantias")
     public String listar(@RequestParam(required = false) String termo, Model model){
         List<Garantia> garantias = garantiaService.listarOuFiltrar(termo);
@@ -75,6 +82,7 @@ public class GarantiaController {
         return "lista-garantias";
     }
 
+    @PreAuthorize("@usuarioService.possuiAssinatura(authentication.name)")
     @PostMapping("/garantias")
     public String salvar(@ModelAttribute("garantia") @Valid Garantia garantia, BindingResult result){
         if (result.hasErrors()) {

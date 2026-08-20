@@ -1,8 +1,9 @@
 package com.garantia_facil.app.controllers;
 
 import com.garantia_facil.app.models.Plano;
-import com.garantia_facil.app.models.Usuario;
 import com.garantia_facil.app.services.StripeService;
+import com.garantia_facil.app.services.UsuarioService;
+import com.stripe.exception.StripeException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,7 @@ public class StripeController {
     }
 
     @GetMapping("/assinatura/sucesso")
-    public String sucesso(){
+    public String sucesso() {
         return "assinatura-sucesso";
     }
 
