@@ -1,9 +1,6 @@
 package com.garantia_facil.app.services;
 
-import com.garantia_facil.app.models.Assinatura;
-import com.garantia_facil.app.models.Plano;
-import com.garantia_facil.app.models.StatusAssinatura;
-import com.garantia_facil.app.models.Usuario;
+import com.garantia_facil.app.models.*;
 import com.garantia_facil.app.repositories.AssinaturaRepository;
 import com.garantia_facil.app.repositories.UsuarioRepository;
 import com.stripe.exception.StripeException;
@@ -68,6 +65,7 @@ public class StripeService {
             assinatura.setStripeSubscriptionId(subscriptionId);
             assinatura.setDataInicio(LocalDateTime.now());
             assinatura.setStatus(StatusAssinatura.ATIVA);
+            usuario.setRole(Role.TECNICO);
 
             assinaturaRepository.save(assinatura);
         }
