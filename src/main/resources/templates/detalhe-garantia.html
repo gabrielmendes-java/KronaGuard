@@ -63,7 +63,7 @@
         </div>
 
         <div class="pt-4 border-t border-slate-100"
-             th:if="${@assinaturaService.possuiAssinaturaAtiva(#authentication.name)}">
+             th:if="${@usuarioService.possuiAssinatura(#authentication.name)}">
 
             <a th:href="@{/g/{codigo}/mal-uso(codigo=${garantia.codigoGarantia})}"
                class="block text-center bg-red-50 hover:bg-red-100 text-red-600 font-semibold py-2 px-4 rounded-xl transition text-xs border border-red-200">
