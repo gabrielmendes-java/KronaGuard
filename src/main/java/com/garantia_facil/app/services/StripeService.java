@@ -1,7 +1,10 @@
 package com.garantia_facil.app.services;
 
+import com.garantia_facil.app.models.Assinatura;
 import com.garantia_facil.app.models.Plano;
+import com.garantia_facil.app.models.StatusAssinatura;
 import com.garantia_facil.app.models.Usuario;
+import com.garantia_facil.app.repositories.AssinaturaRepository;
 import com.garantia_facil.app.repositories.UsuarioRepository;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
@@ -10,15 +13,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class StripeService {
     @Value("${STRIPE_PRICE_ID}")
     private String priceId;
 
     UsuarioRepository usuarioRepository;
+    AssinaturaRepository assinaturaRepository;
 
-    public StripeService(UsuarioRepository usuarioRepository){
+    public StripeService(UsuarioRepository usuarioRepository, AssinaturaRepository assinaturaRepository){
         this.usuarioRepository=usuarioRepository;
+        this.assinaturaRepository=assinaturaRepository;
     }
 
     public String criarCheckout(String email, Plano plano) throws Exception {
@@ -41,5 +48,28 @@ public class StripeService {
         Session session = Session.create(params);
 
         return session.getUrl();
+    }
+
+    public void criarAssinatura(Session session){
+        String plano = session.getMetadata().get("plano");
+        Long usuarioId = Long.parseLong(session.getMetadata().get("usuarioId"));
+        String customerId = session.getCustomer();
+        String subscriptionId = session.getSubscription();
+
+        if (!assinaturaRepository.existsByStripeSubscriptionId(subscriptionId)){
+            Usuario usuario = usuarioRepository.findById(usuarioId)
+                    .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+
+            Assinatura assinatura = new Assinatura();
+
+            assinatura.setPlano(Plano.valueOf(plano));
+            assinatura.setUsuario(usuario);
+            assinatura.setStripeCustomerId(customerId);
+            assinatura.setStripeSubscriptionId(subscriptionId);
+            assinatura.setDataInicio(LocalDateTime.now());
+            assinatura.setStatus(StatusAssinatura.ATIVA);
+
+            assinaturaRepository.save(assinatura);
+        }
     }
 }

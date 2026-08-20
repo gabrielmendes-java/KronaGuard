@@ -22,7 +22,7 @@ public class Assinatura {
     private Usuario usuario;
 
     @NotNull
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String stripeCustomerId;
 
     @NotNull

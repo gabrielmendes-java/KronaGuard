@@ -1,5 +1,6 @@
 package com.garantia_facil.app.controllers;
 
+import com.garantia_facil.app.services.StripeService;
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.model.Event;
 import com.stripe.model.EventDataObjectDeserializer;
@@ -18,6 +19,12 @@ public class StripeWebhookController {
     @Value("${SECRET_WEBHOOK}")
     private String secretWebhook;
 
+    private final StripeService stripeService;
+
+    public StripeWebhookController(StripeService stripeService){
+        this.stripeService = stripeService;
+    }
+
     @PostMapping("/stripe")
     public ResponseEntity<String> receber(@RequestBody String payload, @RequestHeader("Stripe-Signature") String sigHeader){
         try{
@@ -30,8 +37,7 @@ public class StripeWebhookController {
 
                 Session session = (Session) stripeObject;
 
-                System.out.println("Sessão extraída");
-                System.out.println("Id: " + session.getId());
+                stripeService.criarAssinatura(session);
             }
             return ResponseEntity.ok("WEBHOOK RECEBIDO");
         } catch (SignatureVerificationException e) {
