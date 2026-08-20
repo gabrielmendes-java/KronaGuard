@@ -51,7 +51,7 @@ public class GarantiaController {
     @GetMapping("/g/{codigo}")
     public String exibirDetalhes(@PathVariable String codigo, Model model, Authentication authentication){
         Garantia garantia = garantiaService.buscarPorCodigo(codigo);
-
+        
         boolean valida = garantia.getDataValidade().isAfter(LocalDate.now()) || garantia.getDataValidade().isEqual(LocalDate.now());
         boolean possuiAssinatura = (authentication != null && usuarioService.possuiAssinatura(authentication.getName()));
 
