@@ -19,6 +19,10 @@ public class Garantia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
+
     @Column(nullable = false)
     @NotBlank(message = "O nome do cliente é obrigatório.")
     private String clienteNome;

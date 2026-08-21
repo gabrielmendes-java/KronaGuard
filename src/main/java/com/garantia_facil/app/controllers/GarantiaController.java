@@ -50,8 +50,9 @@ public class GarantiaController {
 
     @GetMapping("/g/{codigo}")
     public String exibirDetalhes(@PathVariable String codigo, Model model, Authentication authentication){
-        Garantia garantia = garantiaService.buscarPorCodigo(codigo);
-        
+        Usuario usuario = usuarioService.buscarPorEmail(authentication.getName());
+        Garantia garantia = garantiaService.buscarPorCodigo(codigo, usuario.getId());
+
         boolean valida = garantia.getDataValidade().isAfter(LocalDate.now()) || garantia.getDataValidade().isEqual(LocalDate.now());
         boolean possuiAssinatura = (authentication != null && usuarioService.possuiAssinatura(authentication.getName()));
 
@@ -71,15 +72,17 @@ public class GarantiaController {
 
     @PreAuthorize("@usuarioService.possuiAssinatura(authentication.name)")
     @PostMapping("/g/{codigo}/mal-uso")
-    public String processarMalUso(@PathVariable String codigo, @RequestParam String observacao){
-        garantiaService.registrarMalUso(codigo, observacao);
+    public String processarMalUso(@PathVariable String codigo, @RequestParam String observacao, Authentication authentication){
+        Usuario usuario = usuarioService.buscarPorEmail(authentication.getName());
+        garantiaService.registrarMalUso(codigo, observacao, usuario.getId());
         return "redirect:/g/" + codigo;
     }
 
     @PreAuthorize("@usuarioService.possuiAssinatura(authentication.name)")
     @GetMapping("/garantias")
-    public String listar(@RequestParam(required = false) String termo, Model model){
-        List<Garantia> garantias = garantiaService.listarOuFiltrar(termo);
+    public String listar(@RequestParam(required = false) String termo, Model model, Authentication authentication){
+        Usuario usuario = usuarioService.buscarPorEmail(authentication.getName());
+        List<Garantia> garantias = garantiaService.listarOuFiltrar(termo, usuario.getId());
         model.addAttribute("garantias", garantias);
         model.addAttribute("termo", termo);
         return "lista-garantias";
@@ -87,11 +90,14 @@ public class GarantiaController {
 
     @PreAuthorize("@usuarioService.possuiAssinatura(authentication.name)")
     @PostMapping("/garantias")
-    public String salvar(@ModelAttribute("garantia") @Valid Garantia garantia, BindingResult result){
+    public String salvar(@ModelAttribute("garantia") @Valid Garantia garantia, BindingResult result, Authentication authentication){
         if (result.hasErrors()) {
             return "nova-garantia";
         }
-        Garantia novaGarantia = garantiaService.criarGarantia(garantia);
+
+        Usuario usuario = usuarioService.buscarPorEmail(authentication.getName());
+        Garantia novaGarantia = garantiaService.criarGarantia(garantia, usuario);
+
         return "redirect:/g/" + novaGarantia.getCodigoGarantia();
     }
 }

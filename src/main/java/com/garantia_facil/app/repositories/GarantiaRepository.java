@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface GarantiaRepository extends JpaRepository<Garantia, Long> {
-    List<Garantia> findByClienteNomeContainingIgnoreCaseOrCpfContaining(String nome, String cpf);
-    Optional<Garantia> findByCodigoGarantia(String codigoGarantia);
+    List<Garantia> findByUsuarioIdAndClienteNomeContainingIgnoreCaseOrUsuarioIdAndCpfContaining(Long usuarioId1, String nome, Long usuarioId2, String cpf);
+    Optional<Garantia> findByUsuarioIdAndCodigoGarantia(Long usuarioId, String codigoGarantia);
+    List<Garantia> findByUsuarioId(Long id);
 }
