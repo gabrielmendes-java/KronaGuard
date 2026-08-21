@@ -53,6 +53,7 @@ public class UsuarioController {
     public String esqueciSenhaGet(){
         return "esqueci-senha";
     }
+
     @PostMapping("/esqueci-senha")
     public String esqueciSenha(@RequestParam String email){
         System.out.println("Solicitação de recuperação para: " + email);

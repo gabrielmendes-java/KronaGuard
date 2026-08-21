@@ -13,6 +13,7 @@ public class EmailService {
     }
 
     public void enviarEmail(String email, String assunto, String mensagem){
+        System.out.println("INICIANDO ENVIO DO EMAIL");
         SimpleMailMessage mailMessage = new SimpleMailMessage();
 
         mailMessage.setTo(email);
@@ -20,5 +21,6 @@ public class EmailService {
         mailMessage.setText(mensagem);
 
         javaMailSender.send(mailMessage);
+        System.out.println("EMAIL ENVIADO COM SUCESSO");
     }
 }
