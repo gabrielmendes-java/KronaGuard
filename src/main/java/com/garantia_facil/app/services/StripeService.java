@@ -72,4 +72,21 @@ public class StripeService {
             usuarioRepository.save(usuario);
         }
     }
+
+    public String criarPortalCliente(String email) throws StripeException {
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+
+        Assinatura assinatura = assinaturaRepository.findByUsuarioId(usuario.getId())
+                .orElseThrow(() -> new IllegalStateException("Assinatura não encontrada"));
+
+        com.stripe.param.billingportal.SessionCreateParams params = com.stripe.param.billingportal.SessionCreateParams.builder()
+                .setCustomer(assinatura.getStripeCustomerId())
+                .setReturnUrl("https://kronaguard-production.up.railway.app/planos")
+                .build();
+
+        com.stripe.model.billingportal.Session session = com.stripe.model.billingportal.Session.create(params);
+
+        return session.getUrl();
+    }
 }

@@ -6,19 +6,22 @@ import com.garantia_facil.app.services.UsuarioService;
 import com.stripe.exception.StripeException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class StripeController {
     private final StripeService stripeService;
-
-    public StripeController(StripeService stripeService){
+    private final UsuarioService usuarioService;
+    public StripeController(StripeService stripeService, UsuarioService usuarioService){
         this.stripeService = stripeService;
+        this.usuarioService = usuarioService;
     }
 
     @GetMapping("/planos")
-    public String planos(){
+    public String planos(Model model, Authentication authentication){
+        model.addAttribute("possuiAssinatura", usuarioService.possuiAssinatura(authentication.getName()));
         return "planos";
     }
 
@@ -35,5 +38,11 @@ public class StripeController {
     @GetMapping("/assinatura/cancelada")
     public String cancelada(){
         return "assinatura-cancelada";
+    }
+
+    @PostMapping("/assinatura/portal")
+    public String portal(Authentication authentication) throws StripeException {
+        String url = stripeService.criarPortalCliente(authentication.getName());
+        return "redirect:"+url;
     }
 }

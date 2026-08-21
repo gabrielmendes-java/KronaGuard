@@ -17,8 +17,6 @@
             Krona Guard | Home
         </a>
 
-
-
         <form th:action="@{/logout}" method="post">
             <button type="submit"
                     class="text-sm font-semibold text-slate-500 hover:text-slate-800 transition">
@@ -40,11 +38,15 @@
                 Assinatura
             </span>
 
-            <h1 class="text-3xl font-bold text-slate-900 mt-2">
+            <h1 class="text-3xl font-bold text-slate-900 mt-2"
+                th:text="${possuiAssinatura} ? 'Sua assinatura' : 'Escolha seu plano'">
                 Escolha seu plano
             </h1>
 
-            <p class="text-slate-500 mt-2">
+            <p class="text-slate-500 mt-2"
+               th:text="${possuiAssinatura}
+                    ? 'Sua assinatura está ativa. Você pode gerenciá-la quando quiser.'
+                    : 'Tenha acesso completo ao Krona Guard.'">
                 Tenha acesso completo ao Krona Guard.
             </p>
 
@@ -113,21 +115,58 @@
                     </ul>
 
 
-                    <!-- BOTÃO -->
-                    <form th:action="@{/assinatura/checkout}" method="post">
+                    <!-- USUÁRIO SEM ASSINATURA -->
+                    <div th:if="${!possuiAssinatura}">
 
-                        <button type="submit"
-                                class="w-full mt-8 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-xl transition shadow-sm">
+                        <form th:action="@{/assinatura/checkout}" method="post">
 
-                            Assinar agora
+                            <button type="submit"
+                                    class="w-full mt-8 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-xl transition shadow-sm">
 
-                        </button>
+                                Assinar agora
 
-                    </form>
+                            </button>
 
-                    <p class="text-xs text-slate-400 text-center mt-4">
-                        Pagamento seguro processado pelo Stripe.
-                    </p>
+                        </form>
+
+                        <p class="text-xs text-slate-400 text-center mt-4">
+                            Pagamento seguro processado pelo Stripe.
+                        </p>
+
+                    </div>
+
+
+                    <!-- USUÁRIO COM ASSINATURA -->
+                    <div th:if="${possuiAssinatura}" class="mt-8">
+
+                        <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center">
+
+                            <div class="text-emerald-600 font-semibold text-sm">
+                                ✓ Assinatura ativa
+                            </div>
+
+                            <p class="text-xs text-emerald-700 mt-1">
+                                Você já possui acesso ao Plano Profissional.
+                            </p>
+
+                        </div>
+
+                        <form th:action="@{/assinatura/portal}" method="post">
+
+                            <button type="submit"
+                                    class="w-full mt-4 bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 px-4 rounded-xl transition shadow-sm">
+
+                                Gerenciar assinatura
+
+                            </button>
+
+                        </form>
+
+                        <p class="text-xs text-slate-400 text-center mt-4">
+                            Você será direcionado ao portal seguro do Stripe.
+                        </p>
+
+                    </div>
 
                 </div>
 
