@@ -94,15 +94,15 @@ public class StripeService {
     public void cancelarAssinatura(Subscription subscription){
         String subscriptionId = subscription.getId();
 
-        System.out.println("Subscription cancelada: " + subscriptionId);
-
         Assinatura assinatura = assinaturaRepository.findByStripeSubscriptionId(subscriptionId)
                 .orElseThrow(() -> new IllegalStateException("Assinatura não encontrada"));
 
-        System.out.println("Assinatura encontrada: " + assinatura.getId());
+        Usuario usuario = assinatura.getUsuario();
 
+        usuario.setRole(Role.LOGADO);
         assinatura.setStatus(StatusAssinatura.CANCELADA);
 
+        usuarioRepository.save(usuario);
         assinaturaRepository.save(assinatura);
     }
 }
