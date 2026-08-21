@@ -18,9 +18,9 @@ import java.util.Optional;
 
 @Service
 public class UsuarioService {
-    UsuarioRepository usuarioRepository;
-    PasswordEncoder passwordEncoder;
-    AssinaturaRepository assinaturaRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final AssinaturaRepository assinaturaRepository;
 
     public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, AssinaturaRepository assinaturaRepository){
         this.usuarioRepository = usuarioRepository;

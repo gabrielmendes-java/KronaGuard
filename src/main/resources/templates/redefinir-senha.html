@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nova senha | Krona Guard</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-100 min-h-screen flex items-center justify-center p-4">
+
+<div class="bg-white w-full max-w-md rounded-2xl shadow-xl overflow-hidden border border-slate-200">
+
+    <!-- Marca -->
+    <div class="px-6 pt-6 text-center">
+
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">
+            Krona Guard
+        </span>
+
+    </div>
+
+    <!-- Cabeçalho -->
+    <div class="bg-slate-900 text-white p-6 mt-4">
+
+        <span class="text-xs uppercase tracking-wider font-semibold text-slate-400">
+            Recuperação de acesso
+        </span>
+
+        <h1 class="text-2xl font-bold mt-1">
+            Criar nova senha
+        </h1>
+
+        <p class="text-slate-400 text-sm mt-1">
+            Escolha uma nova senha para acessar sua conta.
+        </p>
+
+    </div>
+
+    <!-- Formulário -->
+    <form th:action="@{/redefinir-senha}"
+          method="post"
+          class="p-6 space-y-5">
+
+        <!-- Token -->
+        <input type="hidden"
+               name="token"
+               th:value="${token}">
+
+        <!-- Erro -->
+        <div th:if="${param.erro == 'senhas'}"
+             class="bg-red-50 border border-red-200 text-red-600 text-sm rounded-xl px-4 py-3">
+            As senhas não são iguais.
+        </div>
+
+        <!-- Nova senha -->
+        <div>
+
+            <label for="senha"
+                   class="block text-xs font-semibold text-slate-600 uppercase mb-1">
+                Nova senha
+            </label>
+
+            <input
+                    type="password"
+                    id="senha"
+                    name="senha"
+                    required
+                    minlength="8"
+                    autocomplete="new-password"
+                    placeholder="Digite sua nova senha"
+                    class="w-full px-4 py-2.5 rounded-xl border border-slate-300
+                           focus:ring-2 focus:ring-slate-900 focus:outline-none
+                           text-slate-800 text-sm">
+
+        </div>
+
+        <!-- Confirmar senha -->
+        <div>
+
+            <label for="confirmarSenha"
+                   class="block text-xs font-semibold text-slate-600 uppercase mb-1">
+                Confirmar senha
+            </label>
+
+            <input
+                    type="password"
+                    id="confirmarSenha"
+                    name="confirmarSenha"
+                    required
+                    minlength="8"
+                    autocomplete="new-password"
+                    placeholder="Digite novamente"
+                    class="w-full px-4 py-2.5 rounded-xl border border-slate-300
+                           focus:ring-2 focus:ring-slate-900 focus:outline-none
+                           text-slate-800 text-sm">
+
+        </div>
+
+        <!-- Botão -->
+        <button
+                type="submit"
+                class="w-full bg-slate-900 hover:bg-slate-800
+                       text-white font-semibold py-3 rounded-xl
+                       transition duration-200
+                       shadow-lg shadow-slate-900/10">
+
+            Alterar senha
+
+        </button>
+
+        <!-- Voltar -->
+        <div class="text-center pt-2">
+
+            <a href="/login"
+               class="text-sm font-semibold text-slate-500
+                      hover:text-slate-800 transition">
+
+                &larr; Voltar para o login
+
+            </a>
+
+        </div>
+
+    </form>
+
+    <!-- Rodapé -->
+    <div class="bg-slate-50 px-6 py-4 border-t border-slate-100 text-center">
+
+        <p class="text-xs text-slate-400">
+            Krona Guard
+        </p>
+
+        <p class="text-xs text-slate-400 mt-1">
+            Gestão simples de garantias para assistências técnicas.
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

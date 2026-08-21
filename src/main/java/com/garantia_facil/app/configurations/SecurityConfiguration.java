@@ -1,6 +1,5 @@
 package com.garantia_facil.app.configurations;
 
-import com.garantia_facil.app.models.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -23,7 +22,7 @@ public class SecurityConfiguration{
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/webhook/stripe"))
                 .authorizeHttpRequests(auth ->
                                 auth
-                                .requestMatchers("/login", "/cadastro","/g/**", "/css/**", "/js/**", "/webhook/stripe").permitAll().anyRequest().authenticated()
+                                .requestMatchers("/login", "/cadastro","/g/**", "/css/**", "/js/**", "/webhook/stripe", "/esqueci-senha", "/redefinir-senha").permitAll().anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")

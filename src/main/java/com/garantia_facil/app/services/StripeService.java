@@ -18,8 +18,8 @@ public class StripeService {
     @Value("${STRIPE_PRICE_ID}")
     private String priceId;
 
-    UsuarioRepository usuarioRepository;
-    AssinaturaRepository assinaturaRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final AssinaturaRepository assinaturaRepository;
 
     public StripeService(UsuarioRepository usuarioRepository, AssinaturaRepository assinaturaRepository){
         this.usuarioRepository=usuarioRepository;

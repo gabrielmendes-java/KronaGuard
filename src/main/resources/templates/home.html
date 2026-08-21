@@ -116,32 +116,6 @@
         </a>
 
 
-        <!-- Clientes -->
-        <a th:if="${usuario.role.name() == 'TECNICO'}"
-           href="/clientes"
-           class="bg-white rounded-2xl border border-slate-200 shadow-sm
-                  p-6 hover:shadow-md hover:border-purple-300 transition">
-
-            <div class="w-12 h-12 rounded-xl bg-purple-100
-                        flex items-center justify-center mb-5">
-
-                <span class="text-2xl text-purple-600">
-                    👤
-                </span>
-
-            </div>
-
-            <h3 class="text-lg font-bold text-slate-900">
-                Clientes
-            </h3>
-
-            <p class="text-sm text-slate-500 mt-2 leading-relaxed">
-                Consulte os clientes cadastrados no sistema.
-            </p>
-
-        </a>
-
-
         <!-- Assinatura -->
         <a href="/planos"
            class="bg-white rounded-2xl border border-slate-200 shadow-sm
