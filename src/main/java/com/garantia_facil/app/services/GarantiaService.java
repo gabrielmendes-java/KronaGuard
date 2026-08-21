@@ -32,6 +32,11 @@ public class GarantiaService {
                 .orElseThrow(() -> new RuntimeException("Garantia não encontrada."));
     }
 
+    public Garantia buscarPorCodigo(String codigo){
+        return garantiaRepository.findByCodigoGarantia(codigo)
+                .orElseThrow(() -> new RuntimeException("Garantia não encontrada."));
+    }
+
     public List<Garantia> listarOuFiltrar(String termo, Long usuarioId){
         if (termo != null && !termo.isBlank()){
             return garantiaRepository.findByUsuarioIdAndClienteNomeContainingIgnoreCaseOrUsuarioIdAndCpfContaining(usuarioId, termo.trim(), usuarioId, termo.trim());
