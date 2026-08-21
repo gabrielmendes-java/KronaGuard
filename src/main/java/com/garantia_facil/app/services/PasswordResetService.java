@@ -45,7 +45,7 @@ public class PasswordResetService {
 
         passwordResetTokenRepository.save(resetToken);
 
-        String link = "http://localhost:8080/redefinir-senha?token=" + token;
+        String link = "https://kronaguard-production.up.railway.app/redefinir-senha?token=" + token;
         String assunto = "Redefinição de senha - Krona Guard";
         String texto = "Olá!\n\n"
                 + "Recebemos uma solicitação para redefinir sua senha.\n\n"
