@@ -5,6 +5,7 @@ import com.stripe.exception.SignatureVerificationException;
 import com.stripe.model.Event;
 import com.stripe.model.EventDataObjectDeserializer;
 import com.stripe.model.StripeObject;
+import com.stripe.model.Subscription;
 import com.stripe.model.checkout.Session;
 import com.stripe.net.Webhook;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +39,16 @@ public class StripeWebhookController {
                 Session session = (Session) stripeObject;
 
                 stripeService.criarAssinatura(session);
+            }
+            if(event.getType().equals("customer.subscription.deleted")){
+                EventDataObjectDeserializer deserializer = event.getDataObjectDeserializer();
+
+                StripeObject object = deserializer.getObject()
+                        .orElseThrow(() -> new IllegalStateException("Não foi possível extrair o objeto"));
+
+                Subscription subscription = (Subscription) object;
+
+                stripeService.cancelarAssinatura(subscription);
             }
             return ResponseEntity.ok("WEBHOOK RECEBIDO");
         } catch (SignatureVerificationException e) {

@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface AssinaturaRepository extends JpaRepository<Assinatura, Long> {
     boolean existsByStripeSubscriptionId(String subscriptionId);
+    Optional<Assinatura> findByStripeSubscriptionId(String subscriptionId);
     Optional<Assinatura> findByUsuarioId(Long id);
     boolean existsByUsuarioIdAndStatus(Long id, StatusAssinatura status);
 }

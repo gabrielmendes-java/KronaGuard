@@ -4,6 +4,7 @@ import com.garantia_facil.app.models.*;
 import com.garantia_facil.app.repositories.AssinaturaRepository;
 import com.garantia_facil.app.repositories.UsuarioRepository;
 import com.stripe.exception.StripeException;
+import com.stripe.model.Subscription;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 import org.springframework.beans.factory.annotation.Value;
@@ -88,5 +89,14 @@ public class StripeService {
         com.stripe.model.billingportal.Session session = com.stripe.model.billingportal.Session.create(params);
 
         return session.getUrl();
+    }
+
+    public void cancelarAssinatura(Subscription subscription){
+        Assinatura assinatura = assinaturaRepository.findByStripeSubscriptionId(subscription.getId())
+                .orElseThrow(() -> new IllegalStateException("Assinatura não encontrada"));
+
+        assinatura.setStatus(StatusAssinatura.CANCELADA);
+
+        assinaturaRepository.save(assinatura);
     }
 }
