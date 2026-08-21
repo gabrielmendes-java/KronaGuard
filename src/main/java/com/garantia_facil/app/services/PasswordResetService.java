@@ -47,12 +47,14 @@ public class PasswordResetService {
 
         String link = "https://kronaguard-production.up.railway.app/redefinir-senha?token=" + token;
         String assunto = "Redefinição de senha - Krona Guard";
-        String texto = "Olá!\n\n"
-                + "Recebemos uma solicitação para redefinir sua senha.\n\n"
-                + "Clique no link abaixo para criar uma nova senha:\n"
-                + link
-                + "\n\n"
-                + "Esse link expira em 15 minutos.";
+        String texto = "Olá, " + usuario.getNome() + "\n\n"
+                + "Recebemos uma solicitação para redefinir a senha da sua conta Krona Guard.\n\n"
+                + "Para criar uma nova senha, acesse:\n"
+                + link + "\n\n"
+                + "Este link é válido por 15 minutos e pode ser utilizado apenas uma vez.\n\n"
+                + "Se você não solicitou a redefinição da senha, ignore este e-mail.\n\n"
+                + "Atenciosamente,\n"
+                + "Krona Guard";
 
         emailService.enviarEmail(email, assunto, texto);
     }
