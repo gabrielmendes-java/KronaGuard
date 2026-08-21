@@ -22,7 +22,7 @@ public class SecurityConfiguration{
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/webhook/stripe"))
                 .authorizeHttpRequests(auth ->
                                 auth
-                                .requestMatchers("/login", "/cadastro","/g/**", "/css/**", "/js/**", "/webhook/stripe", "/esqueci-senha", "/redefinir-senha", "/oauth2/autorizar", "/oauth2/callback").permitAll().anyRequest().authenticated()
+                                .requestMatchers("/login", "/cadastro","/g/**", "/css/**", "/js/**", "/webhook/stripe", "/esqueci-senha", "/redefinir-senha").permitAll().anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
