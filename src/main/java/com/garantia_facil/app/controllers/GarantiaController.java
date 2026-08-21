@@ -12,9 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class GarantiaController {
@@ -55,9 +55,16 @@ public class GarantiaController {
         boolean valida = garantia.getDataValidade().isAfter(LocalDate.now()) || garantia.getDataValidade().isEqual(LocalDate.now());
         boolean possuiAssinatura = (authentication != null && usuarioService.possuiAssinatura(authentication.getName()));
 
+        String linkGarantia = "https://kronaguard-production.up.railway.app/g/"+codigo;
+        String mensagem = "Olá! Sua garantia foi cadastrada pela nossa assistência técnica.\n\n"
+                + "Você pode consultar sua garantia pelo link abaixo:\n"
+                + linkGarantia;
+        String linkWhatsapp = "https://wa.me/?text="+ URLEncoder.encode(mensagem);
+
         model.addAttribute("garantia", garantia);
         model.addAttribute("valida", valida);
         model.addAttribute("possuiAssinatura", possuiAssinatura);
+        model.addAttribute("linkWhatsapp", linkWhatsapp);
 
         return "detalhe-garantia";
     }
